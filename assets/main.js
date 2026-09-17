@@ -51,12 +51,12 @@ const updateEquipmentScene = () => {
   const spread = equipmentScene.dataset.equipmentScene === 'hero'
     ? Math.pow(heroProgress, isMobile ? .82 : .72)
     : Math.max(0, Math.min(1, (((window.innerHeight - rect.top) / (window.innerHeight + rect.height)) - .16) / .5));
-  const mobileScale = isMobile ? (window.innerWidth <= 430 ? .68 : .76) : 1;
-  const mobileEdge = Math.max(34, window.innerWidth * .08);
+  const mobileScale = isMobile ? (window.innerWidth <= 430 ? .72 : .79) : 1;
+  const mobileEdge = Math.max(28, window.innerWidth * .065);
   const groupContainScale = isMobile
     ? equipmentPieces.reduce((scale, piece) => {
         const fullX = (Number(piece.dataset.baseX || 0) + Number(piece.dataset.x)) * mobileScale;
-        const limit = Math.max(0, (stageRect.width - piece.offsetWidth) / 2 - mobileEdge - 10);
+        const limit = Math.max(0, (stageRect.width - piece.offsetWidth) / 2 - mobileEdge - 6);
         return fullX === 0 ? scale : Math.min(scale, limit / Math.abs(fullX));
       }, 1)
     : 1;
@@ -66,7 +66,9 @@ const updateEquipmentScene = () => {
     const targetX = baseX + (Number(piece.dataset.x) * spread * mobileScale);
     const x = targetX * groupContainScale;
     const baseY = Number(piece.dataset.y) * spread * mobileScale;
-    const floatY = Math.sin((spread * Math.PI) + index * .8) * 10 * spread;
+    const floatY = piece.classList.contains('equipment-mixer')
+      ? 0
+      : Math.sin((spread * Math.PI) + index * .8) * 10 * spread;
     const rotation = Number(piece.dataset.r) * spread * (isMobile ? .55 * groupContainScale : 1);
     piece.style.setProperty('--tx', `${x}px`);
     piece.style.setProperty('--ty', `${baseY + floatY}px`);

@@ -57,8 +57,8 @@ h1 em, .contact h2 em { color: var(--red); font-style: normal; }
 .hero-photo img { position: relative; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: 68% center; filter: saturate(.72) contrast(1.05) brightness(.88); transform: scale(1.035); }
 .hero-visual .equipment-stage { height: 39%; left: -9%; right: 1%; bottom: -8%; z-index: 3; }
 .hero-visual .equipment-piece { bottom: 0; }
-.hero-visual .equipment-fridge { width: 16%; height: 80%; }
-.hero-visual .equipment-mixer { width: 20%; height: 68%; }
+.hero-visual .equipment-fridge { width: 18%; height: 85%; }
+.hero-visual .equipment-mixer { width: 18%; height: 63%; }
 .hero-visual .equipment-fryer { width: 17%; height: 72%; }
 .hero-visual .equipment-range { width: 30%; height: 60%; }
 .hero-caption { position: absolute; right: 1.5rem; bottom: 1.3rem; margin: 0; text-transform: uppercase; font-size: .66rem; letter-spacing: .18em; writing-mode: vertical-rl; transform: rotate(180deg); }
@@ -163,8 +163,9 @@ footer { padding: 2rem clamp(1.25rem, 5vw, 5rem); background: #050505; color: #7
   .hero { padding-top: 7rem; }
   .hero-grid { grid-template-columns: 1fr; padding-bottom: 3rem; }
   .hero-copy { padding-top: 2rem; }
-  .hero-visual { min-height: 440px; overflow: hidden; overflow: clip; }
-  .hero-visual .equipment-stage { height: 37%; left: -7%; right: 1%; bottom: -7%; }
+  .hero-visual { min-height: 460px; overflow: hidden; overflow: clip; }
+  .hero-visual .equipment-stage { height: 38%; left: -4%; right: 0; bottom: 0; }
+  .hero-visual .equipment-piece { bottom: 18px; }
   .hero-strip { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%); }
   .hero-strip-track { animation-duration: 20s; }
   .hero-strip-set { gap: 2.2rem; padding-right: 2.2rem; }
@@ -183,10 +184,11 @@ footer { padding: 2rem clamp(1.25rem, 5vw, 5rem); background: #050505; color: #7
   h1 { font-size: clamp(3.6rem, 19vw, 5.4rem); }
   .hero-actions { flex-direction: column; }
   .button { width: 100%; }
-  .hero-visual { min-height: 370px; margin-inline: -1rem; overflow: hidden; overflow: clip; }
+  .hero-visual { min-height: 400px; margin-inline: -1rem; overflow: hidden; overflow: clip; }
   .hero-photo { bottom: 14%; clip-path: polygon(5% 3%,100% 0,97% 88%,4% 100%,0 36%); }
   .hero-photo img { object-position: 72% center; transform: scale(1.04); }
-  .hero-visual .equipment-stage { height: 34%; left: 0; right: 0; bottom: -5%; }
+  .hero-visual .equipment-stage { height: 36%; left: 0; right: 0; bottom: 0; }
+  .hero-visual .equipment-piece { bottom: 20px; }
   .hero-caption { display: none; }
   .section { padding-inline: 1rem; }
   .section h2 { font-size: clamp(3.1rem, 16vw, 4.7rem); }

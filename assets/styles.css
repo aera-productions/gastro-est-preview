@@ -62,8 +62,13 @@ h1 em, .contact h2 em { color: var(--red); font-style: normal; }
 .hero-visual .equipment-fryer { width: 17%; height: 72%; }
 .hero-visual .equipment-range { width: 30%; height: 60%; }
 .hero-caption { position: absolute; right: 1.5rem; bottom: 1.3rem; margin: 0; text-transform: uppercase; font-size: .66rem; letter-spacing: .18em; writing-mode: vertical-rl; transform: rotate(180deg); }
-.hero-strip { position: relative; z-index: 2; min-height: 76px; border-top: 1px solid #343538; display: flex; align-items: center; justify-content: space-between; color: #8c8e92; font: 600 .74rem var(--body); text-transform: uppercase; letter-spacing: .12em; }
-.hero-strip i { width: 3px; height: 3px; border-radius: 50%; background: var(--red); }
+.hero-strip { position: relative; z-index: 2; min-height: 76px; border-top: 1px solid #343538; overflow: hidden; color: #8c8e92; font: 600 .74rem var(--body); text-transform: uppercase; letter-spacing: .12em; white-space: nowrap; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%); }
+.hero-strip-track, .hero-strip-set { display: flex; align-items: center; flex-wrap: nowrap; }
+.hero-strip-track { min-height: 76px; width: max-content; max-width: none; animation: specialties-marquee 28s linear infinite; will-change: transform; }
+.hero-strip-set { flex: 0 0 auto; width: max-content; justify-content: flex-start; gap: clamp(2.2rem, 5vw, 5rem); padding-right: clamp(2.2rem, 5vw, 5rem); }
+.hero-strip-set > * { flex: 0 0 auto; }
+.hero-strip-set + .hero-strip-set { display: flex; }
+.hero-strip i { flex: 0 0 3px; width: 3px; height: 3px; border-radius: 50%; background: var(--red); }
 
 .section { padding: clamp(5.5rem, 10vw, 9rem) clamp(1.25rem, 5vw, 5rem); position: relative; }
 .services::after, .equipment::after, .commitments::after { content: ""; position: absolute; width: 28px; height: 28px; pointer-events: none; opacity: .82; }
@@ -158,9 +163,11 @@ footer { padding: 2rem clamp(1.25rem, 5vw, 5rem); background: #050505; color: #7
   .hero { padding-top: 7rem; }
   .hero-grid { grid-template-columns: 1fr; padding-bottom: 3rem; }
   .hero-copy { padding-top: 2rem; }
-  .hero-visual { min-height: 440px; }
+  .hero-visual { min-height: 440px; overflow: hidden; overflow: clip; }
   .hero-visual .equipment-stage { height: 37%; left: -7%; right: 1%; bottom: -7%; }
-  .hero-strip { overflow: hidden; gap: 2rem; justify-content: flex-start; white-space: nowrap; }
+  .hero-strip { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%); }
+  .hero-strip-track { animation-duration: 20s; }
+  .hero-strip-set { gap: 2.2rem; padding-right: 2.2rem; }
   .services { grid-template-columns: 1fr; }
   .section-heading { position: static; }
   .equipment-intro { grid-template-columns: 1fr; }
@@ -176,10 +183,10 @@ footer { padding: 2rem clamp(1.25rem, 5vw, 5rem); background: #050505; color: #7
   h1 { font-size: clamp(3.6rem, 19vw, 5.4rem); }
   .hero-actions { flex-direction: column; }
   .button { width: 100%; }
-  .hero-visual { min-height: 370px; margin-inline: -1rem; }
+  .hero-visual { min-height: 370px; margin-inline: -1rem; overflow: hidden; overflow: clip; }
   .hero-photo { bottom: 14%; clip-path: polygon(5% 3%,100% 0,97% 88%,4% 100%,0 36%); }
   .hero-photo img { object-position: 72% center; transform: scale(1.04); }
-  .hero-visual .equipment-stage { height: 34%; left: -5%; right: 1%; bottom: -5%; }
+  .hero-visual .equipment-stage { height: 34%; left: 0; right: 0; bottom: -5%; }
   .hero-caption { display: none; }
   .section { padding-inline: 1rem; }
   .section h2 { font-size: clamp(3.1rem, 16vw, 4.7rem); }
@@ -215,4 +222,9 @@ footer { padding: 2rem clamp(1.25rem, 5vw, 5rem); background: #050505; color: #7
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; }
+  .hero-strip-track { animation-duration: 40s; }
+}
+
+@keyframes specialties-marquee {
+  to { transform: translate3d(-50%, 0, 0); }
 }

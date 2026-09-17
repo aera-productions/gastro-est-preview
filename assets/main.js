@@ -1,0 +1,70 @@
+const header = document.querySelector('[data-header]');
+const menuButton = document.querySelector('.menu-toggle');
+const navigation = document.querySelector('.main-nav');
+
+const closeMenu = () => {
+  menuButton.setAttribute('aria-expanded', 'false');
+  menuButton.setAttribute('aria-label', 'Ouvrir le menu');
+  navigation.classList.remove('open');
+  document.body.classList.remove('menu-open');
+};
+
+menuButton.addEventListener('click', () => {
+  const open = menuButton.getAttribute('aria-expanded') === 'true';
+  menuButton.setAttribute('aria-expanded', String(!open));
+  menuButton.setAttribute('aria-label', open ? 'Ouvrir le menu' : 'Fermer le menu');
+  navigation.classList.toggle('open', !open);
+  document.body.classList.toggle('menu-open', !open);
+});
+
+navigation.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 24), { passive: true });
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: .12 });
+
+document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+document.querySelector('[data-year]').textContent = new Date().getFullYear();
+
+const equipmentScene = document.querySelector('[data-equipment-scene]');
+const equipmentPieces = equipmentScene ? [...equipmentScene.querySelectorAll('.equipment-piece')] : [];
+let equipmentFrame;
+
+const updateEquipmentScene = () => {
+  equipmentFrame = null;
+  if (!equipmentScene || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const rect = equipmentScene.getBoundingClientRect();
+  const heroProgress = Math.max(0, Math.min(1, window.scrollY / Math.min(rect.height * .68, window.innerHeight * .58)));
+  const spread = equipmentScene.dataset.equipmentScene === 'hero'
+    ? Math.pow(heroProgress, .72)
+    : Math.max(0, Math.min(1, (((window.innerHeight - rect.top) / (window.innerHeight + rect.height)) - .16) / .5));
+  const mobileScale = window.innerWidth < 600 ? .58 : window.innerWidth < 900 ? .78 : 1;
+
+  equipmentPieces.forEach((piece, index) => {
+    const baseX = Number(piece.dataset.baseX || 0) * mobileScale;
+    const x = baseX + (Number(piece.dataset.x) * spread * mobileScale);
+    const baseY = Number(piece.dataset.y) * spread * mobileScale;
+    const floatY = Math.sin((spread * Math.PI) + index * .8) * 10 * spread;
+    const rotation = Number(piece.dataset.r) * spread;
+    piece.style.setProperty('--tx', `${x}px`);
+    piece.style.setProperty('--ty', `${baseY + floatY}px`);
+    piece.style.setProperty('--rot', `${rotation}deg`);
+  });
+};
+
+const requestEquipmentUpdate = () => {
+  if (!equipmentFrame) equipmentFrame = requestAnimationFrame(updateEquipmentScene);
+};
+
+if (equipmentScene) {
+  updateEquipmentScene();
+  window.addEventListener('scroll', requestEquipmentUpdate, { passive: true });
+  window.addEventListener('resize', requestEquipmentUpdate, { passive: true });
+}

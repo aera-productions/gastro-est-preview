@@ -41,11 +41,17 @@ const updateEquipmentScene = () => {
   if (!equipmentScene || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const rect = equipmentScene.getBoundingClientRect();
-  const heroProgress = Math.max(0, Math.min(1, window.scrollY / Math.min(rect.height * .68, window.innerHeight * .58)));
+  const isMobile = window.innerWidth < 600;
+  const stageRect = equipmentScene.querySelector('.equipment-stage')?.getBoundingClientRect() || rect;
+  const desktopDistance = Math.min(rect.height * .68, window.innerHeight * .58);
+  const mobileProgress = (window.innerHeight * .96 - stageRect.top) / (stageRect.height + window.innerHeight * .28);
+  const heroProgress = isMobile
+    ? Math.max(0, Math.min(1, mobileProgress))
+    : Math.max(0, Math.min(1, window.scrollY / desktopDistance));
   const spread = equipmentScene.dataset.equipmentScene === 'hero'
-    ? Math.pow(heroProgress, .72)
+    ? Math.pow(heroProgress, isMobile ? .82 : .72)
     : Math.max(0, Math.min(1, (((window.innerHeight - rect.top) / (window.innerHeight + rect.height)) - .16) / .5));
-  const mobileScale = window.innerWidth < 600 ? .58 : window.innerWidth < 900 ? .78 : 1;
+  const mobileScale = isMobile ? .76 : window.innerWidth < 900 ? .84 : 1;
 
   equipmentPieces.forEach((piece, index) => {
     const baseX = Number(piece.dataset.baseX || 0) * mobileScale;
@@ -67,4 +73,7 @@ if (equipmentScene) {
   updateEquipmentScene();
   window.addEventListener('scroll', requestEquipmentUpdate, { passive: true });
   window.addEventListener('resize', requestEquipmentUpdate, { passive: true });
+  document.addEventListener('touchmove', requestEquipmentUpdate, { passive: true });
+  window.visualViewport?.addEventListener('scroll', requestEquipmentUpdate, { passive: true });
+  window.visualViewport?.addEventListener('resize', requestEquipmentUpdate, { passive: true });
 }

@@ -42,24 +42,32 @@ const updateEquipmentScene = () => {
 
   const rect = equipmentScene.getBoundingClientRect();
   const isMobile = window.innerWidth < 600;
-  const hero = equipmentScene.closest('.hero');
+  const stageRect = equipmentScene.querySelector('.equipment-stage')?.getBoundingClientRect() || rect;
   const desktopDistance = Math.min(rect.height * .68, window.innerHeight * .58);
-  const mobileDistance = Math.max(
-    (hero?.offsetHeight || window.innerHeight * 1.6) - (window.innerHeight * .3),
-    window.innerHeight * 1.25
-  );
-  const heroProgress = Math.max(0, Math.min(1, window.scrollY / (isMobile ? mobileDistance : desktopDistance)));
+  const mobileProgress = (window.innerHeight * .96 - stageRect.top) / (stageRect.height + window.innerHeight * .28);
+  const heroProgress = isMobile
+    ? Math.max(0, Math.min(1, mobileProgress))
+    : Math.max(0, Math.min(1, window.scrollY / desktopDistance));
   const spread = equipmentScene.dataset.equipmentScene === 'hero'
     ? Math.pow(heroProgress, isMobile ? .82 : .72)
     : Math.max(0, Math.min(1, (((window.innerHeight - rect.top) / (window.innerHeight + rect.height)) - .16) / .5));
   const mobileScale = isMobile ? .76 : window.innerWidth < 900 ? .84 : 1;
+  const mobileEdge = Math.max(24, window.innerWidth * .065);
+  const groupContainScale = isMobile
+    ? equipmentPieces.reduce((scale, piece) => {
+        const fullX = (Number(piece.dataset.baseX || 0) + Number(piece.dataset.x)) * mobileScale;
+        const limit = Math.max(0, (stageRect.width - piece.offsetWidth) / 2 - mobileEdge);
+        return fullX === 0 ? scale : Math.min(scale, limit / Math.abs(fullX));
+      }, 1)
+    : 1;
 
   equipmentPieces.forEach((piece, index) => {
     const baseX = Number(piece.dataset.baseX || 0) * mobileScale;
-    const x = baseX + (Number(piece.dataset.x) * spread * mobileScale);
+    const targetX = baseX + (Number(piece.dataset.x) * spread * mobileScale);
+    const x = targetX * groupContainScale;
     const baseY = Number(piece.dataset.y) * spread * mobileScale;
     const floatY = Math.sin((spread * Math.PI) + index * .8) * 10 * spread;
-    const rotation = Number(piece.dataset.r) * spread;
+    const rotation = Number(piece.dataset.r) * spread * (isMobile ? .55 * groupContainScale : 1);
     piece.style.setProperty('--tx', `${x}px`);
     piece.style.setProperty('--ty', `${baseY + floatY}px`);
     piece.style.setProperty('--rot', `${rotation}deg`);

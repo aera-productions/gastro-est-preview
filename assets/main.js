@@ -88,3 +88,15 @@ if (equipmentScene) {
   window.visualViewport?.addEventListener('scroll', requestEquipmentUpdate, { passive: true });
   window.visualViewport?.addEventListener('resize', requestEquipmentUpdate, { passive: true });
 }
+
+const formStatus = document.querySelector('[data-form-status]');
+if (formStatus) {
+  const contactResult = new URLSearchParams(window.location.search).get('contact');
+  if (contactResult === 'success') {
+    formStatus.textContent = 'Votre demande a bien été envoyée. Nous vous recontacterons rapidement.';
+    formStatus.classList.add('is-success');
+  } else if (contactResult === 'error') {
+    formStatus.textContent = 'L’envoi a échoué. Vérifiez les champs ou contactez-nous directement.';
+    formStatus.classList.add('is-error');
+  }
+}

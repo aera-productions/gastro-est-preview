@@ -10,13 +10,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=20260918-4">
+  <link rel="stylesheet" href="assets/styles.css?v=20260918-9">
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu</a>
   <header class="site-header" data-header>
     <a class="brand" href="#accueil" aria-label="Gastro Est, accueil">
-      <img src="assets/ge-monogram-white.png" alt="Gastro Est" width="160" height="160">
+      <img class="brand-monogram" src="assets/ge-monogram-white.png" alt="" width="160" height="160">
+      <span class="brand-divider"></span>
+      <span class="brand-wordmark"><span>Gastro</span> <strong>Est</strong></span>
     </a>
     <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navigation">
       <span></span><span></span>
@@ -129,24 +131,60 @@
         <p class="eyebrow eyebrow-light"><span></span> Parlons de votre projet</p>
         <h2><span class="contact-question-line">Une cuisine à <span class="no-break">équiper&nbsp;?</span></span><em>On s’en occupe.</em></h2>
         <div class="contact-actions">
-          <a class="button button-primary" href="tel:+33683934315">Appeler maintenant <span aria-hidden="true">↗</span></a>
+          <a class="button button-primary" href="tel:+33683934315">
+            Appeler maintenant
+            <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.8 10 3l2 5-2.1 1.4a14.6 14.6 0 0 0 4.7 4.7L16 12l5 2-.8 2.8a3 3 0 0 1-3.3 2.1A16 16 0 0 1 5.1 7.1 3 3 0 0 1 7.2 3.8Z"/></svg>
+          </a>
           <a class="button button-light" href="mailto:contact@gastroest.fr?subject=Demande%20de%20devis">contact@gastroest.fr</a>
         </div>
-        <div class="contact-details">
-          <a class="contact-address" href="https://maps.google.com/?q=62+avenue+Patton+54800+Jarny" target="_blank" rel="noopener" aria-label="Voir Gastro Est, 62 avenue Patton à Jarny, sur Google Maps">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-            <span>62 avenue Patton<br>54800 Jarny</span>
-          </a>
-          <p>Intervention en Lorraine<br>et dans le Grand Est</p>
-          <div class="social-links" aria-label="Nous retrouver en ligne">
-            <a href="https://wa.me/33683934315?text=Bonjour%2C%20je%20souhaite%20obtenir%20des%20informations%20pour%20un%20projet%20de%20cuisine%20professionnelle." target="_blank" rel="noopener" aria-label="Contacter Gastro Est sur WhatsApp">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.6a8 8 0 0 1-11.8 7L4 20l1.4-4A8 8 0 1 1 20 11.6Z"/><path d="M8.7 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .3.1.4.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.2.2-.1.4 0 .6.6 1 1.4 1.8 2.4 2.3.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.7.8c.2.1.4.2.4.4 0 .7-.4 1.4-1 1.8-.5.4-1.2.6-1.9.5-1.1-.2-2.6-.8-4.2-2.2-1.3-1.2-2.3-2.7-2.7-3.9-.4-1.1.1-1.8.7-2.2Z"/></svg>
-              <span>WhatsApp</span>
+        <div class="contact-layout">
+          <form class="contact-form" id="contact-form" action="contact.php" method="post">
+            <div class="form-heading">
+              <span>Demande de contact</span>
+              <p>Laissez-nous vos coordonnées. Nous vous recontactons pour préciser votre besoin.</p>
+            </div>
+            <div class="form-grid">
+              <label><span>Nom et prénom *</span><input type="text" name="nom" autocomplete="name" required maxlength="100"></label>
+              <label><span>Société</span><input type="text" name="societe" autocomplete="organization" maxlength="120"></label>
+              <label><span>Téléphone *</span><input type="tel" name="telephone" autocomplete="tel" inputmode="tel" required maxlength="30"></label>
+              <label><span>E-mail *</span><input type="email" name="email" autocomplete="email" required maxlength="160"></label>
+              <label class="form-wide"><span>Votre besoin</span><select name="besoin"><option value="Projet de cuisine">Projet de cuisine</option><option value="Achat de matériel">Achat de matériel</option><option value="Installation">Installation</option><option value="Réparation">Réparation</option><option value="Conseil">Conseil</option><option value="Autre demande">Autre demande</option></select></label>
+              <label class="form-wide"><span>Votre message *</span><textarea name="message" rows="5" required maxlength="3000" placeholder="Décrivez brièvement votre projet, le matériel recherché ou votre besoin..."></textarea></label>
+              <label class="form-consent form-wide"><input type="checkbox" name="consentement" value="oui" required><span>J’accepte que mes informations soient utilisées uniquement pour répondre à ma demande. *</span></label>
+              <label class="form-trap" aria-hidden="true"><span>Ne pas remplir</span><input type="text" name="site_web" tabindex="-1" autocomplete="off"></label>
+            </div>
+            <div class="form-submit-row">
+              <button class="button button-primary" type="submit">Envoyer ma demande <span aria-hidden="true">→</span></button>
+              <p class="form-status" data-form-status aria-live="polite"></p>
+            </div>
+          </form>
+
+          <div class="contact-aside">
+            <a class="map-card" href="https://www.google.com/maps/search/?api=1&amp;query=62%20avenue%20Patton%2C%2054800%20Jarny" target="_blank" rel="noopener" aria-label="Ouvrir l’adresse de Gastro Est dans Google Maps">
+              <iframe title="Localisation de Gastro Est à Jarny" src="https://www.google.com/maps?q=62%20avenue%20Patton%2C%2054800%20Jarny&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="-1"></iframe>
+              <span class="map-label"><strong>Gastro Est</strong><small>Ouvrir dans Google Maps ↗</small></span>
             </a>
-            <a href="https://www.instagram.com/gastro_est" target="_blank" rel="noopener" aria-label="Suivre Gastro Est sur Instagram">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.7" r="1" class="social-dot"/></svg>
-              <span>@gastro_est</span>
-            </a>
+            <div class="contact-details">
+              <a class="contact-address" href="https://www.google.com/maps/search/?api=1&amp;query=62%20avenue%20Patton%2C%2054800%20Jarny" target="_blank" rel="noopener" aria-label="Voir Gastro Est, 62 avenue Patton à Jarny, sur Google Maps">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                <span>62 avenue Patton<br>54800 Jarny</span>
+              </a>
+              <p class="service-area">Intervention en Lorraine<br>et dans le Grand Est</p>
+              <div class="social-links" aria-label="Nous contacter et nous retrouver en ligne">
+                <a href="tel:+33683934315" aria-label="Appeler Gastro Est au plus 33 6 83 93 43 15">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.8 10 3l2 5-2.1 1.4a14.6 14.6 0 0 0 4.7 4.7L16 12l5 2-.8 2.8a3 3 0 0 1-3.3 2.1A16 16 0 0 1 5.1 7.1 3 3 0 0 1 7.2 3.8Z"/></svg>
+                  <span>+33 6 83 93 43 15</span>
+                </a>
+                <a href="https://wa.me/33683934315?text=Bonjour%2C%20je%20souhaite%20obtenir%20des%20informations%20pour%20un%20projet%20de%20cuisine%20professionnelle." target="_blank" rel="noopener" aria-label="Contacter Gastro Est sur WhatsApp">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.6a8 8 0 0 1-11.8 7L4 20l1.4-4A8 8 0 1 1 20 11.6Z"/><path d="M8.7 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .3.1.4.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.2.2-.1.4 0 .6.6 1 1.4 1.8 2.4 2.3.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.7.8c.2.1.4.2.4.4 0 .7-.4 1.4-1 1.8-.5.4-1.2.6-1.9.5-1.1-.2-2.6-.8-4.2-2.2-1.3-1.2-2.3-2.7-2.7-3.9-.4-1.1.1-1.8.7-2.2Z"/></svg>
+                  <span>WhatsApp</span>
+                </a>
+                <a href="https://www.instagram.com/gastro_est" target="_blank" rel="noopener" aria-label="Suivre Gastro Est sur Instagram">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.7" r="1" class="social-dot"/></svg>
+                  <span>@gastro_est</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -173,6 +211,6 @@
     <a href="https://wa.me/33683934315?text=Bonjour%2C%20je%20souhaite%20obtenir%20des%20informations%20pour%20un%20projet%20de%20cuisine%20professionnelle." target="_blank" rel="noopener">WhatsApp</a>
     <a href="mailto:contact@gastroest.fr?subject=Demande%20de%20devis">Demander un devis</a>
   </div>
-  <script src="assets/main.js?v=20260918-4"></script>
+  <script src="assets/main.js?v=20260918-5"></script>
 </body>
 </html>
